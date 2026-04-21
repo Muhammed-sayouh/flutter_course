@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_course/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,88 +12,87 @@ class _HomeScreenState extends State<HomeScreen> {
   bool myCheckBoxValue = false;
   int? selectedValue;
   bool switchButton = false;
+
+  List<String> myList = [
+    "Flutter",
+    "Dart",
+    "Java",
+    "Python",
+    "C++",
+    "JavaScript",
+    "Go",
+    "Swift",
+    "Kotlin",
+    "Ruby"
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-       child: Text("data"),
-      ),
+        drawer: Drawer(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 50,
+              ),
+              Container(
+                height: 100,
+                width: 100,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.amber, width: 3),
+                  // borderRadius: BorderRadius.circular(40),
+                    color: Colors.amber,
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        image: AssetImage('assets/images/image_one.jpg'))),
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              ListTile(
+                title: Text("Profile"),
+                leading: Icon(Icons.person),
+                subtitle: Text("Go to Profile Screen"),
+                // enabled: false,
+                dense: true,
+                trailing: Icon(Icons.arrow_forward),
+                onTap: () {
+                  // Navigator.of(context).pushNamed("/profile");
+                  //---------------------------------------------
+                  Navigator.of( context).push(
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) => const ProfileScreen(),
+                    ),
+                  );
+                },
+              )
+            ],
+          ),
+        ),
         appBar: AppBar(
           backgroundColor: Colors.amber,
           title: Text("My App"),
           centerTitle: true,
         ),
-        body: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Welcome",
-                style: TextStyle(color: Colors.blue, fontSize: 20),
+        body: ListView.builder(
+          itemBuilder: (context, index) {
+            return Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(9),
+                side: BorderSide(color: Colors.amber, width: 2),
               ),
-              Container(
-                width: 300,
-                height: 300,
-                color: const Color(0xffea725d),
-              ),
-              Checkbox(
-                value: myCheckBoxValue,
-                onChanged: (bool? myValue) {
-                  setState(() {
-                    myCheckBoxValue = myValue!;
-                  });
-                },
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(2)),
-                side: BorderSide(color: Colors.red, width: 5),
-                fillColor: WidgetStateProperty.all(Colors.red),
-                checkColor: Colors.black,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Male"),
-                  Radio(
-                    value: 1,
-                    groupValue: selectedValue,
-                    onChanged: (int? val) {
-                      setState(() {
-                        selectedValue = val!;
-                      });
-                    },
-                    // fillColor: WidgetStateProperty.all(Colors.red),
-                    activeColor: Colors.blue,
+              elevation: 5,
+              child: SizedBox(
+                height: 100,
+                child: Center(
+                  child: Text(
+                    myList[index],
+                    style: TextStyle(color: Colors.black, fontSize: 18),
                   ),
-                ],
+                ),
               ),
-              RadioListTile(
-                dense: true,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50)),
-                subtitle: Text("Your gender "),
-                title: Text("Female"),
-                value: 2,
-                groupValue: selectedValue,
-                onChanged: (int? val) {
-                  setState(() {
-                    selectedValue = val!;
-                  });
-                },
-                fillColor: WidgetStateProperty.all(Colors.red),
-                activeColor: Colors.blue,
-              ),
-              SwitchListTile(
-                title: Text("Dark theme"),
-                  value: switchButton,
-                  onChanged: (bool? myVal) {
-                    setState(() {
-                      switchButton = myVal!;
-                    });
-                  })
-            ],
-          ),
+            );
+          },
+          itemCount: myList.length,
         ));
   }
 }
