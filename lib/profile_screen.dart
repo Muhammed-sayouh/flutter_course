@@ -28,7 +28,26 @@ class ProfileScreen extends StatelessWidget {
                 // Navigator.of(context).pop();
               },
               child: Text("Go Back"),
-            )
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              
+              child: Row(
+                children: [
+                  Container(
+                    color: Colors.red,
+                    width: MediaQuery.of(context).size.width *0.2,
+                    child: Text(""),
+                  ),
+                  Expanded(
+                    child: Container(
+                      color: Colors.black,
+                      child: Text(""),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

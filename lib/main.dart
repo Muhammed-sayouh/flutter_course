@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_course/bottom_navigator_bar.dart';
 import 'package:flutter_course/categories_screen.dart';
 import 'package:flutter_course/home_screen.dart';
 import 'package:flutter_course/profile_screen.dart';
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'My App',
-      home: HomeScreen(),
+      home: MottomNavBar(),
       routes: {
         "/profile": (context) => ProfileScreen(),
         "/categories": (context) => CategoriesScreen(),

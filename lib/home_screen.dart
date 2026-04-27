@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_course/profile_screen.dart';
+import 'package:flutter_course/search_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,6 +13,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool myCheckBoxValue = false;
   int? selectedValue;
   bool switchButton = false;
+  bool isSearchTapped = false;
 
   List<String> myList = [
     "Flutter",
@@ -31,34 +33,34 @@ class _HomeScreenState extends State<HomeScreen> {
         drawer: Drawer(
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
               Container(
                 height: 100,
                 width: 100,
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.amber, width: 3),
-                  // borderRadius: BorderRadius.circular(40),
+                    border: Border.all(color: Colors.amber, width: 3),
+                    // borderRadius: BorderRadius.circular(40),
                     color: Colors.amber,
                     shape: BoxShape.circle,
-                    image: DecorationImage(
+                    image: const DecorationImage(
                         image: AssetImage('assets/images/image_one.jpg'))),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
               ListTile(
-                title: Text("Profile"),
-                leading: Icon(Icons.person),
-                subtitle: Text("Go to Profile Screen"),
+                title: const Text("Profile"),
+                leading: const Icon(Icons.person),
+                subtitle: const Text("Go to Profile Screen"),
                 // enabled: false,
                 dense: true,
-                trailing: Icon(Icons.arrow_forward),
+                trailing: const Icon(Icons.arrow_forward),
                 onTap: () {
                   // Navigator.of(context).pushNamed("/profile");
                   //---------------------------------------------
-                  Navigator.of( context).push(
+                  Navigator.of(context).push(
                     MaterialPageRoute<void>(
                       builder: (BuildContext context) => const ProfileScreen(),
                     ),
@@ -70,23 +72,44 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         appBar: AppBar(
           backgroundColor: Colors.amber,
-          title: Text("My App"),
+          title: isSearchTapped == true
+              ? TextFormField(
+                  onFieldSubmitted: (value) {
+                    setState(() {
+                      isSearchTapped = !isSearchTapped;
+                    });
+                    Navigator.of(context).push(MaterialPageRoute<void>(
+                      builder: (BuildContext context) => const SearchScreen(),
+                    ));
+                  },
+                )
+              : const Text("Home Screen"),
           centerTitle: true,
+          actions: [
+            IconButton(
+                onPressed: () {
+                  setState(() {
+                    isSearchTapped = !isSearchTapped;
+                  });
+                },
+                icon: const Icon(Icons.search)),
+          ],
         ),
         body: ListView.builder(
           itemBuilder: (context, index) {
             return Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(9),
-                side: BorderSide(color: Colors.amber, width: 2),
+                side: const BorderSide(color: Colors.amber, width: 2),
               ),
               elevation: 5,
               child: SizedBox(
-                height: 100,
+                height: MediaQuery.of(context).size.height * 0.1,
+                width: MediaQuery.of(context).size.width,
                 child: Center(
                   child: Text(
                     myList[index],
-                    style: TextStyle(color: Colors.black, fontSize: 18),
+                    style: const TextStyle(color: Colors.black, fontSize: 18),
                   ),
                 ),
               ),

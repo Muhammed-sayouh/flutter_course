@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   divkit: ^0.6.0
   stac: ^0.11.0
+  carousel_slider: ^5.1.2
 
 dev_dependencies:
   flutter_test:
