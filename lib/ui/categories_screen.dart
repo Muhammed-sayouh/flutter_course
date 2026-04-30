@@ -23,42 +23,42 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     Container(
       color: Colors.red,
       width: double.infinity,
-      child: Text("Item 1"),
+      child: const Text("Item 1"),
     ),
     Container(
       color: Colors.green,
       width: double.infinity,
-      child: Text("Item 2"),
+      child: const Text("Item 2"),
     ),
     Container(
       color: Colors.blue,
       width: double.infinity,
-      child: Text("Item 3"),
+      child: const Text("Item 3"),
     ),
     Container(
       color: Colors.yellow,
       width: double.infinity,
-      child: Text("Item 4"),
+      child: const Text("Item 4"),
     ),
     Container(
       color: Colors.orange,
       width: double.infinity,
-      child: Text("Item 5"),
+      child: const Text("Item 5"),
     ),
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Categories Screen"),
+        title: const Text("Categories Screen"),
       ),
       body: Center(
         child: Column(
           children: [
-            Text("This is the Categories Screen"),
+            const Text("This is the Categories Screen"),
             SwitchListTile(
-                title: Text("Switch Button"),
-                subtitle: Text("This is a switch button"),
+                title: const Text("Switch Button"),
+                subtitle: const Text("This is a switch button"),
                 value: valueOfSwitchTile,
                 onChanged: (value) {
                   setState(() {
@@ -84,8 +84,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   enableInfiniteScroll: true,
                   reverse: false,
                   autoPlay: true,
-                  autoPlayInterval: Duration(seconds: 3),
-                  autoPlayAnimationDuration: Duration(milliseconds: 800),
+                  autoPlayInterval: const Duration(seconds: 3),
+                  autoPlayAnimationDuration: const Duration(milliseconds: 800),
                   autoPlayCurve: Curves.fastOutSlowIn,
                   enlargeCenterPage: true,
                   enlargeFactor: 0.3,

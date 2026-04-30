@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_course/categories_screen.dart';
+import 'package:flutter_course/ui/categories_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -8,12 +8,12 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Profile Screen"),
+        title: const Text("Profile Screen"),
       ),
       body: Center(
         child: Column(
           children: [
-            Text("This is the Profile Screen"),
+            const Text("This is the Profile Screen"),
             ElevatedButton(
               onPressed: () {
                 // عشان نروح لصفحة الكاتيجوريز ونمسح كل الصفحات اللي قبلها
@@ -27,9 +27,9 @@ class ProfileScreen extends StatelessWidget {
                 // عشان نرجع من اي سكرين
                 // Navigator.of(context).pop();
               },
-              child: Text("Go Back"),
+              child: const Text("Go Back"),
             ),
-            Container(
+            SizedBox(
               width: MediaQuery.of(context).size.width,
               
               child: Row(
@@ -37,12 +37,12 @@ class ProfileScreen extends StatelessWidget {
                   Container(
                     color: Colors.red,
                     width: MediaQuery.of(context).size.width *0.2,
-                    child: Text(""),
+                    child: const Text(""),
                   ),
                   Expanded(
                     child: Container(
                       color: Colors.black,
-                      child: Text(""),
+                      child: const Text(""),
                     ),
                   ),
                 ],

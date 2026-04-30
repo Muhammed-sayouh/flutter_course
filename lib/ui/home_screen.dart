@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_course/profile_screen.dart';
-import 'package:flutter_course/search_screen.dart';
+import 'package:flutter_course/ui/profile_screen.dart';
+import 'package:flutter_course/ui/search_screen.dart';
+import 'package:flutter_course/ui/tapbar_screen/tapbar_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -66,7 +67,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   );
                 },
-              )
+              ),
+                            ListTile(
+                title: const Text("Orders"),
+                leading: const Icon(Icons.accessibility_rounded),
+                subtitle: const Text("Go to Orders Screen"),
+                // enabled: false,
+                dense: true,
+                trailing: const Icon(Icons.arrow_forward),
+                onTap: () {
+                  // Navigator.of(context).pushNamed("/profile");
+                  //---------------------------------------------
+                  Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) => const OrdersScreen(),
+                    ),
+                  );
+                },
+              ),
             ],
           ),
         ),
