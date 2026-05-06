@@ -31,12 +31,11 @@ class ProfileScreen extends StatelessWidget {
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width,
-              
               child: Row(
                 children: [
                   Container(
                     color: Colors.red,
-                    width: MediaQuery.of(context).size.width *0.2,
+                    width: MediaQuery.of(context).size.width * 0.2,
                     child: const Text(""),
                   ),
                   Expanded(
@@ -47,6 +46,12 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            Stack(
+              children: [
+                Image.asset("assets/images/image_one.jpg"),
+                Positioned(right: 10, bottom: 10, child: Icon(Icons.favorite_border , size: 50,)),
+              ],
             ),
           ],
         ),

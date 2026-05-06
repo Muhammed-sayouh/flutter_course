@@ -28,6 +28,87 @@ class _HomeScreenState extends State<HomeScreen> {
     "Kotlin",
     "Ruby"
   ];
+
+  void myDialog() {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: Colors.red,
+            elevation: 5,
+            titlePadding: EdgeInsets.all(10),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+                side: BorderSide(color: Colors.black)),
+            title: Text("My Dialog"),
+            content: Text("This is content"),
+            actions: [
+              ElevatedButton(
+                onPressed: () {},
+                child: Text("Ok"),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("cancel"),
+              )
+            ],
+          );
+        });
+  }
+
+  void showMysnackbar() {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      duration: Duration(seconds: 1),
+      backgroundColor: Colors.red,
+      content: Row(
+        children: [
+          Icon(
+            Icons.person,
+            color: Colors.white,
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Text("snack bar"),
+        ],
+      ),
+    ));
+  }
+
+  void showMyBottomSheet() {
+    showBottomSheet(
+      context: context,
+      builder: (context) {
+        return BottomSheet(
+          
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20)
+            )
+          ),
+          onClosing: (){
+            print("object");
+          }, builder: (context) {
+          return Container(
+            decoration: BoxDecoration(
+               color: Colors.blue,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20)
+            )),
+           
+            height: 500,
+            width: MediaQuery.of(context).size.width,
+            child: Text("This is bottom sheet"));
+        },);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
               ),
-                            ListTile(
+              ListTile(
                 title: const Text("Orders"),
                 leading: const Icon(Icons.accessibility_rounded),
                 subtitle: const Text("Go to Orders Screen"),
@@ -115,19 +196,26 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: ListView.builder(
           itemBuilder: (context, index) {
-            return Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(9),
-                side: const BorderSide(color: Colors.amber, width: 2),
-              ),
-              elevation: 5,
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height * 0.1,
-                width: MediaQuery.of(context).size.width,
-                child: Center(
-                  child: Text(
-                    myList[index],
-                    style: const TextStyle(color: Colors.black, fontSize: 18),
+            return InkWell(
+              onTap: () {
+                // myDialog();
+                showMysnackbar();
+                // showMyBottomSheet();
+              },
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(9),
+                  side: const BorderSide(color: Colors.amber, width: 2),
+                ),
+                elevation: 5,
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.1,
+                  width: MediaQuery.of(context).size.width,
+                  child: Center(
+                    child: Text(
+                      myList[index],
+                      style: const TextStyle(color: Colors.black, fontSize: 18),
+                    ),
                   ),
                 ),
               ),
