@@ -14,6 +14,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'My App',
+      theme: ThemeData(
+        fontFamily: 'AfcoFontAr',
+      ),
       home: const BottomNavBar(),
       routes: {
         "/profile": (context) => const ProfileScreen(),

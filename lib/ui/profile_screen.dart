@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_course/ui/categories_screen.dart';
+import 'package:flutter_course/ui/custom_widgets/drop_down.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -8,7 +9,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Profile Screen"),
+        title: const Text("الملف الشخصي " ,style: TextStyle(fontFamily: 'AfcoFontAr'),),
       ),
       body: Center(
         child: Column(
@@ -53,6 +54,10 @@ class ProfileScreen extends StatelessWidget {
                 Positioned(right: 10, bottom: 10, child: Icon(Icons.favorite_border , size: 50,)),
               ],
             ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: 200,
+              child: DropdownExample())
           ],
         ),
       ),
