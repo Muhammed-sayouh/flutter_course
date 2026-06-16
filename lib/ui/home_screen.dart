@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_course/helpers/dio_package.dart';
 import 'package:flutter_course/ui/profile_screen.dart';
 import 'package:flutter_course/ui/search_screen.dart';
 import 'package:flutter_course/ui/tapbar_screen/tapbar_screen.dart';
@@ -109,6 +111,18 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+ 
+ Future<void> getData() async{
+  Response myResponse =  await  dio().get('ads');
+
+  if (myResponse.statusCode ==200) {
+    
+  } else {
+    
+  }
+  // print("this is my response $myResponse");
+ }
+ // wwww.h.com/login
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -199,8 +213,10 @@ class _HomeScreenState extends State<HomeScreen> {
             return InkWell(
               onTap: () {
                 // myDialog();
-                showMysnackbar();
+                // showMysnackbar();
                 // showMyBottomSheet();
+getData();
+
               },
               child: Card(
                 shape: RoundedRectangleBorder(
