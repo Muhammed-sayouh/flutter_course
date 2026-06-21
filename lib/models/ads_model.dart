@@ -1,53 +1,55 @@
-import 'dart:convert';
+class BannerResponse {
+  final int? status;
+  final List<BannerItem>? data;
 
-class AdsModel {
-    int status;
-    List<SliderImages> data;
+  BannerResponse({
+    this.status,
+    this.data,
+  });
 
-    AdsModel({
-        required this.status,
-        required this.data,
-    });
-
-    factory AdsModel.fromRawJson(String str) => AdsModel.fromJson(json.decode(str));
-
-    String toRawJson() => json.encode(toJson());
-
-    factory AdsModel.fromJson(Map<String, dynamic> json) => AdsModel(
-        status: json["status"],
-        data: List<SliderImages>.from(json["data"].map((x) => SliderImages.fromJson(x))),
+  factory BannerResponse.fromJson(Map<String, dynamic> json) {
+    return BannerResponse(
+      status: json['status'],
+      data: json['data'] != null
+          ? List<BannerItem>.from(
+              json['data'].map((x) => BannerItem.fromJson(x)),
+            )
+          : [],
     );
+  }
 
-    Map<String, dynamic> toJson() => {
-        "status": status,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+  Map<String, dynamic> toJson() {
+    return {
+      'status': status,
+      'data': data?.map((x) => x.toJson()).toList(),
     };
+  }
 }
 
-class SliderImages {
-    int id;
-    String image;
-    String link;
+class BannerItem {
+  final int? id;
+  final String? image;
+  final String? link;
 
-    SliderImages({
-        required this.id,
-        required this.image,
-        required this.link,
-    });
+  BannerItem({
+    this.id,
+    this.image,
+    this.link,
+  });
 
-    factory SliderImages.fromRawJson(String str) => SliderImages.fromJson(json.decode(str));
-
-    String toRawJson() => json.encode(toJson());
-
-    factory SliderImages.fromJson(Map<String, dynamic> json) => SliderImages(
-        id: json["id"],
-        image: json["image"],
-        link: json["link"],
+  factory BannerItem.fromJson(Map<String, dynamic> json) {
+    return BannerItem(
+      id: json['id'],
+      image: json['image'],
+      link: json['link'],
     );
+  }
 
-    Map<String, dynamic> toJson() => {
-        "id": id,
-        "image": image,
-        "link": link,
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'image': image,
+      'link': link,
     };
+  }
 }

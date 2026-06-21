@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_course/helpers/dio_package.dart';
+import 'package:flutter_course/models/ads_model.dart';
+import 'package:flutter_course/ui/login/login_screen.dart';
 import 'package:flutter_course/ui/profile_screen.dart';
 import 'package:flutter_course/ui/search_screen.dart';
 import 'package:flutter_course/ui/tapbar_screen/tapbar_screen.dart';
@@ -85,44 +87,62 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       builder: (context) {
         return BottomSheet(
-          
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20)
-            )
-          ),
-          onClosing: (){
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+          onClosing: () {
             print("object");
-          }, builder: (context) {
-          return Container(
-            decoration: BoxDecoration(
-               color: Colors.blue,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20)
-            )),
-           
-            height: 500,
-            width: MediaQuery.of(context).size.width,
-            child: Text("This is bottom sheet"));
-        },);
+          },
+          builder: (context) {
+            return Container(
+                decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20))),
+                height: 500,
+                width: MediaQuery.of(context).size.width,
+                child: Text("This is bottom sheet"));
+          },
+        );
       },
     );
   }
 
- 
- Future<void> getData() async{
-  Response myResponse =  await  dio().get('ads');
+  BannerResponse? myBannerResponse;
+  bool loader = false;
+  bool hasError = false;
 
-  if (myResponse.statusCode ==200) {
-    
-  } else {
-    
+  Future<void> getData() async {
+    try {
+      loader = true;
+      Response myResponse = await dio().get('ads');
+
+      if (myResponse.statusCode == 200) {
+        myBannerResponse = BannerResponse.fromJson(myResponse.data);
+      } else {
+        // Handle error case
+      }
+    } catch (e) {
+      setState(() {
+        hasError = true;
+      });
+
+      print("Error fetching data: $e");
+    } finally {
+      setState(() {
+        loader = false;
+      });
+    }
   }
-  // print("this is my response $myResponse");
- }
- // wwww.h.com/login
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  // wwww.h.com/login
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -180,6 +200,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
               ),
+               ListTile(
+                title: const Text("login"),
+                leading: const Icon(Icons.key),
+                subtitle: const Text("Go to login Screen"),
+                // enabled: false,
+                dense: true,
+                trailing: const Icon(Icons.arrow_forward),
+                onTap: () {
+                  // Navigator.of(context).pushNamed("/profile");
+                  //---------------------------------------------
+                  Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) =>  LoginScreen(),
+                    ),
+                  );
+                },
+              ),
             ],
           ),
         ),
@@ -208,37 +245,43 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: const Icon(Icons.search)),
           ],
         ),
-        body: ListView.builder(
-          itemBuilder: (context, index) {
-            return InkWell(
-              onTap: () {
-                // myDialog();
-                // showMysnackbar();
-                // showMyBottomSheet();
-getData();
-
-              },
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(9),
-                  side: const BorderSide(color: Colors.amber, width: 2),
-                ),
-                elevation: 5,
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.1,
-                  width: MediaQuery.of(context).size.width,
-                  child: Center(
-                    child: Text(
-                      myList[index],
-                      style: const TextStyle(color: Colors.black, fontSize: 18),
-                    ),
-                  ),
-                ),
-              ),
-            );
-          },
-          itemCount: myList.length,
-        ));
+        body: loader
+            ? CircularProgressIndicator()
+            : hasError
+                ? Text("Somting went wrong")
+                : myBannerResponse!.data!.isEmpty
+                    ? Text("No adds")
+                    : ListView.builder(
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            onTap: () {
+                              // myDialog();
+                              // showMysnackbar();
+                              // showMyBottomSheet();
+                              getData();
+                            },
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(9),
+                                side: const BorderSide(
+                                    color: Colors.amber, width: 2),
+                              ),
+                              elevation: 5,
+                              child: SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.1,
+                                width: MediaQuery.of(context).size.width,
+                                child: Center(
+                                  child: Image.network(
+                                    myBannerResponse!.data![index].image!,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                        itemCount: myBannerResponse!.data!.length,
+                      ));
   }
 }
 
