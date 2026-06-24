@@ -274,6 +274,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Center(
                                   child: Image.network(
                                     myBannerResponse!.data![index].image!,
+                                    errorBuilder: (context, error, stackTrace) => Icon(Icons.image_not_supported_sharp),
                                   ),
                                 ),
                               ),
