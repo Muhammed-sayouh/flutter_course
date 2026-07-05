@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_course/helpers/dio_package.dart';
 import 'package:flutter_course/models/ads_model.dart';
 import 'package:flutter_course/ui/login/login_screen.dart';
+import 'package:flutter_course/ui/pick_media/pick_media.dart';
 import 'package:flutter_course/ui/profile_screen.dart';
 import 'package:flutter_course/ui/search_screen.dart';
 import 'package:flutter_course/ui/tapbar_screen/tapbar_screen.dart';
+import 'package:flutter_course/ui/translation/translation_screen.dart';
+import 'package:get/get.dart' as g;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -200,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
               ),
-               ListTile(
+              ListTile(
                 title: const Text("login"),
                 leading: const Icon(Icons.key),
                 subtitle: const Text("Go to login Screen"),
@@ -212,9 +215,31 @@ class _HomeScreenState extends State<HomeScreen> {
                   //---------------------------------------------
                   Navigator.of(context).push(
                     MaterialPageRoute<void>(
-                      builder: (BuildContext context) =>  LoginScreen(),
+                      builder: (BuildContext context) => LoginScreen(),
                     ),
                   );
+                },
+              ),
+              ListTile(
+                title: const Text("translation"),
+                leading: const Icon(Icons.translate),
+                subtitle: const Text("Go to translation Screen"),
+                // enabled: false,
+                dense: true,
+                trailing: const Icon(Icons.arrow_forward),
+                onTap: () {
+                  g.Get.to(g.Get.to(TanslationScreen()));
+                },
+              ),
+              ListTile(
+                title: const Text("Pick Media"),
+                leading: const Icon(Icons.photo),
+                subtitle: const Text("Go to Pick Media Screen"),
+                // enabled: false,
+                dense: true,
+                trailing: const Icon(Icons.arrow_forward),
+                onTap: () {
+                  g.Get.to(g.Get.to(PickMediaScreen()));
                 },
               ),
             ],
@@ -274,7 +299,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Center(
                                   child: Image.network(
                                     myBannerResponse!.data![index].image!,
-                                    errorBuilder: (context, error, stackTrace) => Icon(Icons.image_not_supported_sharp),
+                                    errorBuilder: (context, error,
+                                            stackTrace) =>
+                                        Icon(Icons.image_not_supported_sharp),
                                   ),
                                 ),
                               ),

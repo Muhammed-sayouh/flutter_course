@@ -1,11 +1,17 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_course/helpers/translations/ar.dart';
+import 'package:flutter_course/helpers/translations/en.dart';
+import 'package:flutter_course/helpers/translations/get_my_trans.dart';
 import 'package:flutter_course/helpers/validate_login.dart';
 import 'package:flutter_course/ui/bottom_navigator_bar.dart';
 import 'package:flutter_course/ui/categories_screen.dart';
 import 'package:flutter_course/ui/login/controller/login_controller.dart';
-import 'package:flutter_course/ui/login/login_screen.dart';
 import 'package:flutter_course/ui/profile_screen.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -45,12 +51,22 @@ class _MyAppState extends State<MyApp> {
           create: (context) => LoginController(),
         ),
       ],
-      child: MaterialApp(
+      child: GetMaterialApp(
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        DefaultCupertinoLocalizations.delegate,
+      ],
+        translations: Translation(getArLaunguage(), getEnLaunguage()),
+        locale: const Locale("ar"),
+        fallbackLocale: const Locale("ar"),
         title: 'My App',
         theme: ThemeData(
           fontFamily: 'AfcoFontAr',
         ),
-        home: isLogin ? BottomNavBar() : LoginScreen(),
+        home:BottomNavBar() ,
+        // isLogin ? BottomNavBar() : LoginScreen(),
         routes: {
           "/profile": (context) => const ProfileScreen(),
           "/categories": (context) => const CategoriesScreen(),
@@ -59,3 +75,4 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+ // Get.updateLocale(Locale("ar"));
