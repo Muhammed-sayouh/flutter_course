@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_course/helpers/translations/ar.dart';
@@ -12,8 +14,9 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -26,6 +29,10 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool isLogin = false;
+    void printFirebastoken() async {
+    String? token = await FirebaseMessaging.instance.getToken();
+    print("$token my firebase token");
+  }
 
   Future<void> getIsAuth() async {
     final result = await isAuth();
@@ -40,6 +47,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     getIsAuth();
+    printFirebastoken();
     super.initState();
   }
 
@@ -52,12 +60,12 @@ class _MyAppState extends State<MyApp> {
         ),
       ],
       child: GetMaterialApp(
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        DefaultCupertinoLocalizations.delegate,
-      ],
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          DefaultCupertinoLocalizations.delegate,
+        ],
         translations: Translation(getArLaunguage(), getEnLaunguage()),
         locale: const Locale("ar"),
         fallbackLocale: const Locale("ar"),
@@ -65,7 +73,7 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           fontFamily: 'AfcoFontAr',
         ),
-        home:BottomNavBar() ,
+        home: BottomNavBar(),
         // isLogin ? BottomNavBar() : LoginScreen(),
         routes: {
           "/profile": (context) => const ProfileScreen(),
